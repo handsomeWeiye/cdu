@@ -14,12 +14,11 @@ class API {
 
   //系统相关
   static final String uploadFiles = apifmBaseUrl + domain + '/dfs/upload/file';//文件上传
-  
-  ///App版本相关
-  static final String firstDayOfTerm =''; //获取学期初始日期
-  static final String checkUpdate = ''; //获取最新版本号
-  static final String latestAndroid = ''; //获取最新安装包
-  static final String announcement = ''; //获取版本更新公告
+  static final String getFirstDayOfTerm = apifmBaseUrl + domain + '/config/value'; //获取学期初始日期
+  static final String getLatestVersion = apifmBaseUrl + domain + '/config/value'; //获取最新版本号
+  static final String getLatestAndroid =  apifmBaseUrl + domain + '/config/value'; //获取最新安卓安装包
+  static final String getLatestIOS =  apifmBaseUrl + domain + '/config/value'; //获取最新IOS安装包
+  static final String getAnnouncement = apifmBaseUrl + domain + '/config/value'; //获取版本更新公告
 
   //短信相关
   static final String getSms = apifmBaseUrl + domain +'/verification/sms/get'; //获取验证码

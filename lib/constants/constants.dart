@@ -23,11 +23,22 @@ class Constants {
     // 'actions_message': '消息',
     'actions_mine': '我的'
   };
-  static const String merchantNo = "2004191283910589";
-  static const String merchantKey = "ca81d5bbd49087e166469a299263e67f";
-  static const String cetToken = "bu4Zp6JSev7sM9DQn8FXxPNB";
-  static const String jAppKey = "541f7a74fe7b45764bb62bcf";
-  static const String socialPwd = "weiyezuishuai";
+
+  static const String latestVersion = "latestVersion";
+  static const String firstDayOfTerm = "firstDayOfTerm";
+  static const String announcement = "announcement";
+  static const String latestIOS = "latestIOS";
+  static const String latestAndroid = "latestAndroid"; 
+
+  static const String merchantNo = "2004191283910589"; //商户号
+  static const String merchantKey = "ca81d5bbd49087e166469a299263e67f"; //商户秘钥
+
+  static const String cetToken = "bu4Zp6JSev7sM9DQn8FXxPNB"; //CET查询token
+
+  static const String jAppKey = "541f7a74fe7b45764bb62bcf"; //极光IM Key
+  static const String socialPwd = "weiyezuishuai"; //极光用户默认密码
+
+
   static final Map<String, dynamic> bmobHeader = {
     'X-Bmob-Application-Id': '160a9b19cb9a1bedce5c0f48d2fd8ce5',
     'X-Bmob-REST-API-Key': '63e64b5539026cfe34ac1f38542cda9e',

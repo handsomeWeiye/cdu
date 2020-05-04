@@ -6,6 +6,8 @@ import 'package:cdu_helper/utils/net_utils.dart';
 import 'package:dio/dio.dart';
 
 class SystermApi{
+
+
   static Future<Response<String>> getAnnouncement()async{
     await NetUtils.getX(API.getAnnouncement,data:{'key':Constants.announcement});
   }
@@ -26,6 +28,23 @@ class SystermApi{
         'pinCode': picCode,
         'token': token
       });
+
+  static Future<Response<dynamic>> getBanner({String token,String type})async{
+      var res = await NetUtils.getX(API.getBanner,data:{'token':token,'type':type});
+      return res;
+  }
+    static Future<Response<dynamic>> getCategoryList({String token,String type})async{
+      var token = SpUtils.getTokenSync();
+      var res = await NetUtils.getX(API.getHomeCategoryList,data:{'token':token,});
+      print(res);
+      return res;
+  }
+  
+  
+    static Future<String>getTest({String token,String type})async{
+    Future.delayed(Duration(seconds: 2));
+    return 'weiyezuishuai';
+  }
 
   static Future<Response<String>> checkSms(String code, String mobile,
           {String token}) async =>

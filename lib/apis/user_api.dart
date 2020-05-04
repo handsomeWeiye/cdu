@@ -16,11 +16,11 @@ class UserApi {
           data: {'mobile': mobile, 'code': code, 'pwd': pwd, 'token': token});
 
   static Future<Response<String>> login(
-          String deviceId, String deviceName, String mobile, String pwd,
-          {String token}) async =>
+           String mobile, String pwd,
+          {String deviceId, String deviceName,String token}) async =>
       NetUtils.postX(API.login, data: {
-        'deviceId': deviceId,
-        'deviceName': deviceName,
+        'deviceId': DeviceUtils.deviceModel,
+        'deviceName':  DeviceUtils.deviceModel,
         'mobile': mobile,
         'pwd': pwd,
         'token': token

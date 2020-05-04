@@ -35,14 +35,14 @@ class Screens {
 }
 
 /// Screen capability method.
-double suSetSp(double size, {double scale}) =>
-    _sizeCapable(ScreenUtil().setSp(size) * 2, scale: scale);
+// double suSetSp(double size, {double scale}) =>
+//     _sizeCapable(ScreenUtil().setSp(size) * 2, scale: scale);
 
-double suSetWidth(double size, {double scale}) =>
-    _sizeCapable(ScreenUtil().setWidth(size) * 2, scale: scale);
+// double suSetWidth(double size, {double scale}) =>
+//     _sizeCapable(ScreenUtil().setWidth(size) * 2, scale: scale);
 
-double suSetHeight(double size, {double scale}) =>
-    _sizeCapable(ScreenUtil().setHeight(size) * 2, scale: scale);
+// double suSetHeight(double size, {double scale}) =>
+//     _sizeCapable(ScreenUtil().setHeight(size) * 2, scale: scale);
 
-double _sizeCapable(double size, {double scale}) =>
-    size * (scale ?? Provider.of<SettingsProvider>(currentContext, listen: false).fontScale);
+// double _sizeCapable(double size, {double scale}) =>
+//     size * (scale ?? Provider.of<SettingsProvider>(currentContext, listen: false).fontScale);

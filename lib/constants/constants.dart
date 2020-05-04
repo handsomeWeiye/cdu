@@ -8,6 +8,7 @@ export 'events.dart';
 export 'instances.dart';
 export 'screens.dart';
 export 'themes.dart';
+export 'hive_boxes.dart';
 export 'package:cdu_helper/apis/api.dart';
 export 'package:cdu_helper/utils/utils.dart';
 

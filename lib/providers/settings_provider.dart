@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cdu_helper/apis/api.dart';
+import 'package:cdu_helper/apis/systerm_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
@@ -11,7 +13,9 @@ class SettingProvider extends ChangeNotifier{
   }
   Future<void> getAnnouncement()async{
     try{
-      final Map<String,dynamic>data= jsonDecode(await NetUtils.get(API.geta))
+      final Map<String,dynamic>data= jsonDecode((await SystermApi.getAnnouncement()).data)as Map<String, dynamic>;
+    }catch(e){
+      print('$e');
     }
   }
 }

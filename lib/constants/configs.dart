@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Configs {
-  static final String appTitle = 'CDU Helper'; //APP名
+  static final String appTitle = 'CduHelper'; //APP名
   static final Map<String, Color> appColor = {
     'dark-primary-color': Color(int.parse('1976D2', radix: 16)).withAlpha(255),
     'default-primary-color':Color(int.parse('2196F3', radix: 16)).withAlpha(255),

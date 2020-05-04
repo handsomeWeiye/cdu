@@ -1,20 +1,25 @@
 import 'package:cdu_helper/constants/configs.dart';
+import 'package:cdu_helper/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:notification_permissions/notification_permissions.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 import 'utils/utils.dart';
 import 'constants/constants.dart';
+
+import 'routes.dart';
 
 
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();//确保flutter初始化
   NetUtils.initConfig(); //允许网络请求抓包
   await NotificationPermissions.getNotificationPermissionStatus(); //获取允许通知的情况
-  NotificationUtils.initSettings();//通知初始化
+  // NotificationUtils.initSettings();//通知初始化
   await DeviceUtils.initDeviceInfo();//获取用户设备信息
   await SpUtils.initSharedPreferences();//数据持久化初始
+  // await HiveBoxes.openBoxes();//本地数据库初始化
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -33,6 +38,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  
   final Color currentThemeColor = Configs.appThemeColor;//获取目前设置的主题色
   bool isDark = ThemeUtils.spGetBrightnessDark(); //获取目前设置的夜间模式
     @override
@@ -40,22 +46,25 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     setBrightness();//设置白天模式或者夜间模式
 
-    Instances.eventBus
+    Instances.eventBus 
+      //订阅夜间模式变化，实行状态变化
       ..on<BrightnessChangedEvent>().listen((event){
         print('event'+' is '+ '$event');
         isDark = event.isDark;
         if(mounted)setState(() {});
       })
-      ..on<BindGotEvent>().listen((event){
-        print('event'+' is '+ '$event');
-        Provider.of<CoursesProvider>(currentContext, listen: false).initCourses();
-        Provider.of<ScoresProvider>(currentContext, listen: false).initScore();
-      })
+      //订阅绑定状况变化，实行状态变化
+      // ..on<BindGotEvent>().listen((event){
+      //   print('event'+' is '+ '$event');
+      //   Provider.of<CoursesProvider>(currentContext, listen: false).initCourses();
+      //   Provider.of<ScoresProvider>(currentContext, listen: false).initScore();
+      // })
+      //订阅登录状况变化，实行状态变化
       ..on<LogoutEvent>().listen((event){
         isDark = false;
         if (mounted) setState(() {});
-        Provider.of<CoursesProvider>(currentContext, listen: false).unloadCourses();
-        Provider.of<ScoresProvider>(currentContext, listen: false).unloadScore();        
+        // Provider.of<CoursesProvider>(currentContext, listen: false).unloadCourses();
+        // Provider.of<ScoresProvider>(currentContext, listen: false).unloadScore();        
       });
   }
 
@@ -76,26 +85,22 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: providers,
-      child: MaterialApp(
+   
+     return
+    // MultiProvider(
+    //   providers: providers,
+    //   child: 
+    
+     OKToast(child:  MaterialApp(
         navigatorKey: Instances.navigatorKey,
-        builder: (c,w){
-          ScreenUtil.init(c,allowFontScaling: true);
-          // return NoScaleTextWidget(child:w);
-        },
         title: Configs.appTitle,
         theme: isDark ? Themes.dark():Themes.light(),
         home: SplashPage(),
-        navigatorObservers: [FFNavigatorObserver()],
-        onGenerateRoute: (RouteSettings settings)=>onGenerateRouteHelper(
-          settings,
-          notFoundFallback: NoRoutePage(route: settings.name),
-        ),
+        onGenerateRoute:onGenerateRoute,
         localizationsDelegates: Constants.localizationsDelegates,
         supportedLocales: Constants.supportedLocales,
-      ),
-    );
+      ));
+    // );
   }
 }
 

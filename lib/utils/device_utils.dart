@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:uuid/uuid.dart';
 
 import 'package:device_info/device_info.dart';
@@ -23,6 +24,7 @@ class DeviceUtils{
 
     static Future<void> getModel() async {
     if (Platform.isAndroid) {
+      var initializationSettingsAndroid =  AndroidInitializationSettings('ic_launcher.png');
       deviceInfo = await _deviceInfoPlugin.androidInfo;
       final AndroidDeviceInfo androidInfo = deviceInfo as AndroidDeviceInfo;
 

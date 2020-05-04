@@ -1,16 +1,23 @@
 import 'dart:core';
+export 'systerm_api.dart';
+export 'social_api.dart';
 export 'school_api.dart';
 export 'user_api.dart';
 export 'cms_api.dart';
 
 class API {
+
   static const String apifmBaseUrl = 'https://api.it120.cc/';
   static const String apifmAdminBaseUrl = 'https://user.api.it120.cc/';
   static const String schoolApiBaseUrl = 'http://schoolapi.weiye.site/';
   static const String bmobApiBaseUrl = 'https://api2.bmob.cn/1/classes/';
-  static const String domain = 'cdu'; //api工厂专属域名
+  static const String domain = 'weiye'; //api工厂专属域名
 
   static final String homePage = "http://cdu.weiye.site"; //应用官网
+
+  //主页相关
+  static final String getBanner = apifmBaseUrl + domain + '/banner/list';//获取APP banner  
+  static final String getHomeCategoryList = apifmBaseUrl + domain + '/mock/home/categoryList';//获取主页分类
 
   //系统相关
   static final String uploadFiles = apifmBaseUrl + domain + '/dfs/upload/file';//文件上传

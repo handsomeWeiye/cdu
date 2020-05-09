@@ -41,8 +41,8 @@ class ThingDateWidget extends StatelessWidget {
   DateTime now = DateTime.now(); //目前时间
   List<int> differentDays = []; //间隔时间
   List thingDateList = []; //重大日期列表
-  List<int> removeIndexs = []; //需要移除的日期索引
-List<Widget> thingDateItems = [];//将要显示的数量
+  // List<int> removeIndexs = []; //需要移除的日期索引
+  List<Widget> thingDateItems = [];//将要显示的数量
   //Icon
   Widget thingDateIcon() {
     return Container(
@@ -72,16 +72,6 @@ List<Widget> thingDateItems = [];//将要显示的数量
         ));
   }
 
-  //Item组合
-  // Widget thingDateItems() {
-  //   List<Widget> thingDateItems = [];
-  //   for (int i = 0; i < thingDateList.length; i++) {
-  //     list.add(thingDateItem(differentDays[i], thingDateList[i]['thingName'],
-  //         thingDateList[i]['thingDate']['iso'].toString().substring(0, 10), i));
-  //   }
-  //   return list.isNotEmpty ? Row(children: list) : Text('加载中');
-  // }
-
   @override
   Widget build(BuildContext context) {
     differentDays = []; //每次刷新时将differentDays清空
@@ -91,7 +81,6 @@ List<Widget> thingDateItems = [];//将要显示的数量
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           thingDateList = jsonDecode(snapshot.data.toString())['results'];//解析json
-          print(thingDateList);
           //如果已经经过的日期，那么就移除，没有经过的，保留
           thingDateList.forEach((val) {
             DateTime date = DateTime.parse(val['thingDate']['iso']); //解析日期
@@ -102,20 +91,10 @@ List<Widget> thingDateItems = [];//将要显示的数量
                   thingDateItems.add(thingDateItem(differentDay, val['thingName'],
           val['thingDate']['iso'].toString().substring(0, 10)));
             } 
-            // else {
-            //   //否则获取待删除日期索引
-            //   int removeIndex = thingDateList.indexOf(f);
-            //   removeIndexs.add(removeIndex);
-            // }
           });
-          //删除过期日期
-          // removeIndexs.forEach((f) {
-          //   thingDateList.removeAt(f);
-          // });
-          // print(removeIndexs);
-          print(thingDateList);
           return Container(
               padding: EdgeInsets.all(5),
+              margin: EdgeInsets.only(bottom: 20),
               height: ScreenUtil().setHeight(200),
               width: ScreenUtil().setWidth(750),
               child: SingleChildScrollView(

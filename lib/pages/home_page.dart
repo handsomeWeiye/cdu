@@ -4,8 +4,11 @@ import 'package:cdu_helper/beans/banner.dart' as bean;
 import 'package:cdu_helper/apis/systerm_api.dart';
 import 'package:cdu_helper/beans/home_category_list.dart';
 import 'package:cdu_helper/constants/constants.dart';
+import 'package:cdu_helper/pages/courses_page.dart';
+import 'package:cdu_helper/pages/credit_page.dart';
 import 'package:cdu_helper/utils/data_utils.dart';
 import 'package:cdu_helper/widgets/thing_date.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,7 +29,7 @@ class _HomePageState extends State<HomePage>
   void initState() {
     super.initState();
     _scrollViewController = ScrollController(initialScrollOffset: 0.0);
-    _tabController = TabController(vsync: this, length: 3);
+    _tabController = TabController(vsync: this, length: 2);
   }
 
   @override
@@ -40,68 +43,66 @@ class _HomePageState extends State<HomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey[100],
-        appBar: AppBar(
-          elevation: 0,
-          title: Text('主页'),
-          backgroundColor: Colors.blue,
-        ),
-        body: NestedScrollView(
-          controller: _scrollViewController,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              SliverAppBar(
-                pinned: true,
-                floating: true,
-                expandedHeight: ScreenUtil().setHeight(1200),
-                flexibleSpace: FlexibleSpaceBar(
-                  collapseMode: CollapseMode.pin,
-                  background: Container(
-                    //头部整个背景颜色
-                    height: double.infinity,
-                    color: Colors.white,
-                    child: Column(
-                      children: <Widget>[
-                        _swiperWideget(),
-                        // _categoryGridWidget(token),
-                        ThingDateWidget()
-                      ],
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.grey[100],
+      appBar: AppBar(
+        elevation: 0,
+        title: Text('主页'),
+        backgroundColor: Colors.blue,
+      ),
+      body: Container(
+          //头部整个背景颜色
+          height: double.infinity,
+          color: Colors.white,
+          child: NestedScrollView(
+            controller: _scrollViewController,
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                SliverAppBar(
+                  pinned: true,
+                  floating: true,
+                  expandedHeight: ScreenUtil().setHeight(1000),
+                  flexibleSpace: FlexibleSpaceBar(
+                    collapseMode: CollapseMode.pin,
+                    background: Container(
+                      //头部整个背景颜色
+                      height: double.infinity,
+                      color: Colors.white,
+                      child: Column(
+                        children: <Widget>[
+                          _swiperWideget(),
+                          _categoryGridWidget(token),
+                          // ThingDateWidget()
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                bottom: TabBar(
-                    controller: _tabController,
-                    isScrollable: true,
-                    indicatorSize: TabBarIndicatorSize.label,
-                    indicatorWeight: 5.0,
-                    labelColor: Color(0xff333333),
-                    labelStyle: TextStyle(
-                      fontSize: 15.0,
-                    ),
-                    unselectedLabelColor: Color(0xff333333),
-                    unselectedLabelStyle: TextStyle(
-                      fontSize: 12.0,
-                    ),
-                    tabs: [
-                      Tab(text: "表白墙"),
-                      Tab(text: "跳蚤市场"),
-                      Tab(text: "失物招领"),
-                    ]),
-              )
-            ];
-          },
-          body: TabBarView(controller: _tabController, children: [
-            Center(
-              child: Text("aaa:"),
-            ),
-            Center(
-              child: Text("aaa:"),
-            ),
-            Center(
-              child: Text("aaa:"),
-            )
-          ]),
-        ));
+                  bottom: TabBar(
+                      controller: _tabController,
+                      isScrollable: true,
+                      indicatorSize: TabBarIndicatorSize.label,
+                      indicatorWeight: 5.0,
+                      labelColor: Color(0xff333333),
+                      labelStyle: TextStyle(
+                        fontSize: 15.0,
+                      ),
+                      unselectedLabelColor: Color(0xff333333),
+                      unselectedLabelStyle: TextStyle(
+                        fontSize: 12.0,
+                      ),
+                      tabs: [
+                        Tab(text: "课表"),
+                        Tab(text: "成绩"),
+                      ]),
+                )
+              ];
+            },
+            body: TabBarView(
+                controller: _tabController,
+                children: [CoursesPage(), CreditPage()]),
+          )),
+    );
   }
 }
 
@@ -143,19 +144,21 @@ Widget _swiperWideget() {
 Widget _categoryGridWidget(String token) {
   Widget _categoryItembuild(categoryItemData) {
     return Container(
-      height: 50,
-      child: InkWell(
-      onTap: () {},
-      child: Column(
-        children: <Widget>[
-          Image.network(
-            categoryItemData.picUrl,
-            width: ScreenUtil().setWidth(100),
+        height: 50,
+        child: InkWell(
+          onTap: () {
+            navigatorState.pushNamed(categoryItemData.routName);
+          },
+          child: Column(
+            children: <Widget>[
+              Image.network(
+                categoryItemData.picUrl,
+                width: ScreenUtil().setWidth(100),
+              ),
+              Text(categoryItemData.name, maxLines: 1)
+            ],
           ),
-          Text(categoryItemData.name, maxLines: 1)
-        ],
-      ),
-    ));
+        ));
   }
 
   return FutureBuilder(
@@ -187,5 +190,3 @@ Widget _categoryGridWidget(String token) {
     },
   );
 }
-
-

@@ -36,8 +36,17 @@ class SpUtils {
     
   }
   static Future<Map<String, dynamic>> getStudentAccount() async {
-    String account = await sp.getString(spAccount);
-    String password  = await sp.getString(spPassword);
+    String account =  sp.getString(spAccount);
+    String password  =  sp.getString(spPassword);
+
+    return <String, dynamic>{
+      'account': account,
+      'password':password
+    };
+  }
+  static Map<String, dynamic> getStudentAccountSync()  {
+    String account =  sp.getString(spAccount);
+    String password  =  sp.getString(spPassword);
 
     return <String, dynamic>{
       'account': account,

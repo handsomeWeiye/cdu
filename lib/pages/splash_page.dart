@@ -1,5 +1,6 @@
 import 'package:cdu_helper/constants/constants.dart';
 import 'package:cdu_helper/utils/data_utils.dart';
+import 'package:cdu_helper/utils/toast_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -30,7 +31,7 @@ class _SplashPageState extends State<SplashPage>
                 //判断是否绑定教务系统
                 SpUtils.isBind().then((res) {
                   if (res) {
-                    navigatorState.pushReplacementNamed('/home');
+                    navigatorState.pushReplacementNamed('/index');
                   } else {
                     navigatorState.pushReplacementNamed('/bindStudent');
                   }
@@ -42,6 +43,8 @@ class _SplashPageState extends State<SplashPage>
           } else {
             navigatorState.pushReplacementNamed('/login');
           }
+        }).catchError((onError){
+          showToast('抱歉，出了点问题$onError');
         });
       }
     });

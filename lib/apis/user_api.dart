@@ -47,8 +47,8 @@ class UserApi {
       NetUtils.getX(API.getUserDetail, data: {'token': token});
 
   static Future<Response<String>> updateUserDetail(
-          String avatarUrl, String city, String nick, String province,
-          String token, {String extJsonStr}) async =>
+         { String avatarUrl, String city, String nick, String province,
+          String token, String extJsonStr}) async =>
       NetUtils.postX(API.updateUserDetail, data: {
         'avatarUrl': avatarUrl,
         'city': city,

@@ -32,14 +32,14 @@ T asT<T>(dynamic value) {
   return null;
 }
 
-class CategoryList {
-  CategoryList({
+class Score {
+  Score({
     this.code,
+    this.message,
     this.data,
-    this.msg,
   });
 
-  factory CategoryList.fromJson(Map<String, dynamic> jsonRes) {
+  factory Score.fromJson(Map<String, dynamic> jsonRes) {
     if (jsonRes == null) {
       return null;
     }
@@ -54,21 +54,21 @@ class CategoryList {
         }
       }
     }
-    return CategoryList(
+    return Score(
       code: asT<int>(jsonRes['code']),
+      message: asT<String>(jsonRes['message']),
       data: data,
-      msg: asT<String>(jsonRes['msg']),
     );
   }
 
   int code;
+  String message;
   List<Data> data;
-  String msg;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'code': code,
+        'message': message,
         'data': data,
-        'msg': msg,
       };
   @override
   String toString() {
@@ -78,27 +78,31 @@ class CategoryList {
 
 class Data {
   Data({
-    this.name,
-    this.routName,
-    this.picUrl,
+    this.lessonName,
+    this.credit,
+    this.point,
+    this.score,
   });
 
   factory Data.fromJson(Map<String, dynamic> jsonRes) => jsonRes == null
       ? null
       : Data(
-          name: asT<String>(jsonRes['name']),
-          routName: asT<String>(jsonRes['routName']),
-          picUrl: asT<String>(jsonRes['picUrl']),
+          lessonName: asT<String>(jsonRes['lesson_name']),
+          credit: asT<double>(jsonRes['credit']),
+          point: asT<double>(jsonRes['point']),
+          score: jsonRes['score'],
         );
 
-  String name;
-  String routName;
-  String picUrl;
+  String lessonName;
+  double credit;
+  double point;
+  dynamic score;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'name': name,
-        'routName': routName,
-        'picUrl': picUrl,
+        'lesson_name': lessonName,
+        'credit': credit,
+        'point': point,
+        'score': score,
       };
   @override
   String toString() {

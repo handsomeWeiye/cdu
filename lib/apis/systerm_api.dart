@@ -36,7 +36,6 @@ class SystermApi{
     static Future<Response<dynamic>> getCategoryList({String token,String type})async{
       var token = SpUtils.getTokenSync();
       var res = await NetUtils.getX(API.getHomeCategoryList,data:{'token':token,});
-      print(res);
       return res;
   }
   
@@ -52,20 +51,28 @@ class SystermApi{
           data: {'code': code, 'mobile': mobile,});
 
     static Future<Response<String>> uploadImage(File file) async {
+
     print('开始上传文件');
+
+    //imagePicker获得照片路径
     String path = file.path;
-    var name = path.substring(path.lastIndexOf("/") + 1, path.length);
+    //获得文件名
+    String name = path.substring(path.lastIndexOf("/") + 1, path.length);
+    //获得文件类型
     String imageType = name.substring(name.lastIndexOf(".") + 1, name.length);
-    // var image = await MultipartFile.fromFile(
-    //     path,
-    //     filename: name,
-    // );
+ 
     print("文件路径="+path);
     print("文件名="+name);
     print("文件类型=$imageType");
+
+    //构造formData
     FormData formData = FormData.fromMap({
-      "file": await MultipartFile.fromFile(path,filename: name)
+      "upfile": await MultipartFile.fromFile(path,filename: name)
     });
-    NetUtils.uploadFiles(API.uploadFiles, formData);
+
+    //使用dio发送formData请求
+    Response<String> data  = await NetUtils.uploadFiles(API.uploadFiles, formData);
+    print(data);
+    return data;
   }
 }

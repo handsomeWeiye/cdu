@@ -14,6 +14,7 @@ class _BindStudentPageState extends State<BindStudentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset:false,
       appBar: AppBar(
         title: Text('绑定教务系统'),
       ),
@@ -71,7 +72,7 @@ class _BindStudentPageState extends State<BindStudentPage> {
                           if (data['code'] == 200) {
                             SpUtils.saveStudentAccount(account,pwd);
                             showToast('绑定教务系统账号成功');
-                            navigatorState.pushReplacementNamed('/home');
+                            navigatorState.pushReplacementNamed('/info');
                           } else {
                             showToast('绑定教务系统账号失败');
                           }

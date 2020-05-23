@@ -329,7 +329,7 @@ class _LoginPageState extends State<LoginPage> {
                       navigatorState.pushReplacementNamed('/home');
                     } else {
                       showToast('请绑定您的教务系统账号');
-                      navigatorState.pushReplacementNamed('/bindStudent');
+                      navigatorState.pushReplacementNamed('/bind');
                     }
                   });
                 } else {

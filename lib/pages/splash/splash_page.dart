@@ -33,7 +33,7 @@ class _SplashPageState extends State<SplashPage>
                   if (res) {
                     navigatorState.pushReplacementNamed('/index');
                   } else {
-                    navigatorState.pushReplacementNamed('/bindStudent');
+                    navigatorState.pushReplacementNamed('/bind');
                   }
                 });
               }else{

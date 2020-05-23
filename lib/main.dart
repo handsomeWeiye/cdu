@@ -1,5 +1,5 @@
 import 'package:cdu_helper/constants/configs.dart';
-import 'package:cdu_helper/pages/splash_page.dart';
+import 'package:cdu_helper/pages/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -96,7 +96,7 @@ class _MyAppState extends State<MyApp> {
         title: Configs.appTitle,
         theme: isDark ? Themes.dark():Themes.light(),
         home: SplashPage(),
-        onGenerateRoute:onGenerateRoute,
+        onGenerateRoute: onGenerateRoute,
         localizationsDelegates: Constants.localizationsDelegates,
         supportedLocales: Constants.supportedLocales,
       ));

@@ -54,7 +54,9 @@ dependencies:
   badges: ^1.1.1
   flutter_swiper : ^1.1.6
   curved_navigation_bar: ^0.3.1
-
+  like_button: ^0.2.0
+  flutter_html: ^0.11.1
+  waterfall_flow: ^0.1.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

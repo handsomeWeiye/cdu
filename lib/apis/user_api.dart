@@ -43,8 +43,8 @@ class UserApi {
       NetUtils.post(API.getUserInfo,
           data: {'account': account, 'password': password});
 
-  static Future<Response<String>> getUserDetail({String token}) async =>
-      NetUtils.getX(API.getUserDetail, data: {'token': token});
+  static Future<Response<String>> getUserDetail({String token}) async 
+      { Response<String> data = await NetUtils.getX(API.getUserDetail, data: {'token': token});return data;}
 
   static Future<Response<String>> updateUserDetail(
          { String avatarUrl, String city, String nick, String province,

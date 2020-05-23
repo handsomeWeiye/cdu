@@ -1,20 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-// class RouterUtils {
-//   static Map<String, WidgetBuilder> routes = {
-//     "/splash": (BuildContext context) => SplashPage(),
-//     "/login": (BuildContext context) => NewLoginPage(),
-//     "/main": (BuildContext context) => MainPage(),
-
-//     "/user": (BuildContext context, {Map<String, dynamic> arguments}) => SettingsPage(),
-//     "/scanqrcode": (BuildContext context) => ScanQrCodePage(),
-//     "/about": (BuildContext context) => AboutPage(),
-
-// //        "${pathDivider}test": (BuildContext context) => (),
-//   };
-// }
-
 class TransparentPageRoute extends PageRoute<void> {
   TransparentPageRoute({
     @required this.builder,

@@ -1,6 +1,6 @@
-import 'package:cdu_helper/pages/forum_page.dart';
-import 'package:cdu_helper/pages/home_page.dart';
-import 'package:cdu_helper/pages/person_page.dart';
+import 'package:cdu_helper/pages/forum/forum_page.dart';
+import 'package:cdu_helper/pages/home/home_page.dart';
+import 'package:cdu_helper/pages/member/person_page.dart';
 import 'package:flutter/material.dart';
 
 class IndexPage extends StatefulWidget {
@@ -27,7 +27,7 @@ class _IndexPageState extends State<IndexPage> {
     ),
   ];
   final pages = [HomePage(), ForumPage(),PersonPage()];
-  int currentIndex = 0;
+  int currentIndex = 1;
   void _changePage(index){
     setState(() {
       currentIndex = index;

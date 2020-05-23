@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waterfall_flow/waterfall_flow.dart';
 
 class LostPage extends StatefulWidget {
   @override
@@ -8,8 +9,11 @@ class LostPage extends StatefulWidget {
 class _LostPageState extends State<LostPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('失物招领'),
+      ),
+      body: Container()
     );
   }
 }

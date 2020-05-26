@@ -1,4 +1,4 @@
-import 'package:cdu_helper/pages/courses_page.dart';
+import 'package:cdu_helper/pages/course/courses_page.dart';
 import 'package:cdu_helper/pages/credit_page.dart';
 import 'package:cdu_helper/pages/forum/forum_detail_page.dart';
 import 'package:cdu_helper/pages/home/home_page.dart';

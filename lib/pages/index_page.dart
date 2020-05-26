@@ -27,7 +27,7 @@ class _IndexPageState extends State<IndexPage> {
     ),
   ];
   final pages = [HomePage(), ForumPage(),PersonPage()];
-  int currentIndex = 1;
+  int currentIndex = 0;
   void _changePage(index){
     setState(() {
       currentIndex = index;

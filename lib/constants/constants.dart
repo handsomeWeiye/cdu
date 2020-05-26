@@ -23,6 +23,14 @@ class Constants {
     // 'actions_message': '消息',
     'actions_mine': '我的'
   };
+  static const  Map intGradeToWord = {
+      0:"大一",
+      1:"大二",
+      2:"大三",
+      3:"大四",
+    };
+
+  static const int weeksInTerm = 22;
 
   static const String latestVersion = "latestVersion";
   static const String firstDayOfTerm = "firstDayOfTerm";

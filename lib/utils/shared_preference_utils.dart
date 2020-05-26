@@ -54,6 +54,11 @@ class SpUtils {
     };
   }
 
+    static String getAccount()  {
+    String account =  sp.getString(spAccount);
+    return account;
+  }
+
   static void saveUid(String uid) async {
     if (uid != null) {
       await sp.setString(spUid, uid);

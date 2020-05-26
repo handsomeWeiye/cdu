@@ -1,5 +1,6 @@
 import 'package:cdu_helper/constants/configs.dart';
 import 'package:cdu_helper/pages/splash/splash_page.dart';
+import 'package:cdu_helper/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -87,9 +88,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
    
      return
-    // MultiProvider(
-    //   providers: providers,
-    //   child: 
+    MultiProvider(
+      providers: providers,
+      child: 
     
      OKToast(child:  MaterialApp(
         navigatorKey: Instances.navigatorKey,
@@ -99,8 +100,8 @@ class _MyAppState extends State<MyApp> {
         onGenerateRoute: onGenerateRoute,
         localizationsDelegates: Constants.localizationsDelegates,
         supportedLocales: Constants.supportedLocales,
-      ));
-    // );
+      ))
+    );
   }
 }
 

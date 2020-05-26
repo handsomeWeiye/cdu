@@ -1,9 +1,15 @@
- import 'package:flutter/material.dart';
+ import 'package:cdu_helper/constants/constants.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
  import 'dart:math' as math;
  
  final math.Random _random = math.Random();
   int next(int min, int max) => min + _random.nextInt(max - min);
 class CoursesApi{
+  static Future<Response<String>> getStartDay()async{
+    Response<String> data =  await NetUtils.getX(API.getLatestVersion,data:{'key':Constants.firstDayOfTerm});
+    return data;
+  }
  static final List<Color> courseColorsList = [
     Color(0xffEF9A9A),
     Color(0xffF48FB1),

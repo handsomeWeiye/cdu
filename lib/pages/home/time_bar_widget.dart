@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:cdu_helper/apis/api.dart';
+import 'package:cdu_helper/widgets/loading_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -37,12 +38,15 @@ class MyPainter extends CustomPainter {
 }
 
 //自定义的重大日期组件
-Widget thingDateWidget() {
+Widget timeBarWidget() {
   DateTime now = DateTime.now(); //目前时间
   List<int> differentDays = []; //间隔时间
   List thingDateList = []; //重大日期列表
   // List<int> removeIndexs = []; //需要移除的日期索引
   List<Widget> thingDateItems = [];//将要显示的数量
+  // differentDays = []; //每次刷新时将differentDays清空
+  // thingDateItems = [];//每次刷新时将thingDateItems清空
+
   //Icon
   Widget thingDateIcon() {
     return Container(
@@ -52,6 +56,7 @@ Widget thingDateWidget() {
       ),
     );
   }
+
 
   //Item
   Widget thingDateItem(int days, String dateName, String date) {
@@ -72,11 +77,10 @@ Widget thingDateWidget() {
         ));
   }
 
-  @override
-  Widget build(BuildContext context) {
-    differentDays = []; //每次刷新时将differentDays清空
-    thingDateItems = [];//每次刷新时将thingDateItems清空
-    return FutureBuilder(
+    return  Container(
+      child: Card(
+        margin: EdgeInsets.all(5),
+        child:  FutureBuilder(
       future: SchoolApi.getFestival(), //获取数据
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
@@ -93,13 +97,14 @@ Widget thingDateWidget() {
             } 
           });
           return Container(
-              padding: EdgeInsets.all(5),
-              margin: EdgeInsets.only(bottom: 20),
+              // padding: EdgeInsets.all(5),
+              // margin: EdgeInsets.only(bottom: 20),
               height: ScreenUtil().setHeight(200),
               width: ScreenUtil().setWidth(750),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     thingDateIcon(),
@@ -108,9 +113,12 @@ Widget thingDateWidget() {
                   ],
                 ),
               ));
+        }else{
+          return loadingWidget();
         }
-        return Center(child: Text('加载中'));
+       
       },
+    ),
+      ),
     );
-  }
 }

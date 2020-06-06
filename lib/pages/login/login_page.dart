@@ -122,8 +122,10 @@ class _LoginPageState extends State<LoginPage> {
               },
             ),
             TextField(
+              autofocus: false,
               controller: pwdController,
               decoration: InputDecoration(
+                
                 prefixIcon: Icon(Icons.lock),
                 border: UnderlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(25.0))),

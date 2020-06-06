@@ -1,6 +1,8 @@
 import 'package:cdu_helper/pages/course/courses_page.dart';
 import 'package:cdu_helper/pages/credit_page.dart';
+import 'package:cdu_helper/pages/forum/forum_add_page.dart';
 import 'package:cdu_helper/pages/forum/forum_detail_page.dart';
+import 'package:cdu_helper/pages/forum/forum_page.dart';
 import 'package:cdu_helper/pages/home/home_page.dart';
 import 'package:cdu_helper/pages/login/impresve_information_page.dart';
 import 'package:cdu_helper/pages/index_page.dart';
@@ -30,7 +32,9 @@ final routes = {
   '/index':(context)=>IndexPage(),
   '/info':(context)=>ImpresveInformationPage(),
   '/bind':(context)=>BindStudentPage(),
+  '/forum':(context)=>ForumPage(),
   '/detail':(context,{arguments})=>ForumDetailPage(arguments: arguments),
+  '/addArticle':(context)=>ForumAddPage(),
 };
 
 //配置路由拦截器

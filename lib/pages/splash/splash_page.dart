@@ -21,11 +21,13 @@ class _SplashPageState extends State<SplashPage>
     _animation = Tween(begin: 0.0, end: 1.0).animate(_animationController);
     _animation.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        //首先检测是否曾经登录
+        
+        // navigatorState.pushReplacementNamed('/info');
+        // 首先检测是否曾经登录
         SpUtils.isLogin().then((res) {
           if (res) {
             //判断token是否有效
-            UserApi.getUserDetail(token: SpUtils.getTokenSync()).then((res) {
+            UserApi.getMyDetail(token: SpUtils.getTokenSync()).then((res) {
               var data = DataUtils.jsonToData(res);
               if (data['code']==0) {
                 //判断是否绑定教务系统

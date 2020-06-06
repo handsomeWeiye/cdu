@@ -38,8 +38,8 @@ class Constants {
   static const String latestIOS = "latestIOS";
   static const String latestAndroid = "latestAndroid"; 
 
-  static const String merchantNo = "2004191283910589"; //商户号
-  static const String merchantKey = "ca81d5bbd49087e166469a299263e67f"; //商户秘钥
+  static const String merchantNo = "2004051221207531"; //商户号
+  static const String merchantKey = "6d0dfa14eddca50187694a02b6b5413c"; //商户秘钥
 
   static const String cetToken = "bu4Zp6JSev7sM9DQn8FXxPNB"; //CET查询token
 

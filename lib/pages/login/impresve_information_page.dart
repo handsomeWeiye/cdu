@@ -200,11 +200,12 @@ class _ImpresveInformationPageState extends State<ImpresveInformationPage> {
                     SystermApi.uploadImage(_image).then((val) {
                       print(val);
                       var data = DataUtils.jsonToData(val);
+                      String imageUrl =  data['data']['url'];
                       if (data['code'] == 0) {
                         showToast('上传照片成功');
                         UserApi.updateUserDetail(
                                 token: SpUtils.getTokenSync(),
-                                avatarUrl: data['data']['url'],
+                                avatarUrl: imageUrl,
                                 nick: nickName,
                                 city: '成都',
                                 province: '四川')
@@ -212,6 +213,8 @@ class _ImpresveInformationPageState extends State<ImpresveInformationPage> {
                           var data = DataUtils.jsonToData(val);
                           if (data['code'] == 0) {
                             showToast('更新信息成功');
+                            SpUtils.addUserUrl(imageUrl);
+                            SpUtils.addUserNickName(nickName);
                             navigatorState.pushReplacementNamed('/index');
                           } else {
                             showToast('更新信息失败');

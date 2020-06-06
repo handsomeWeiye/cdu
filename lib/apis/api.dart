@@ -47,9 +47,9 @@ class API {
   static final String resetPwd = apifmBaseUrl + domain +'/user/m/reset-pwd'; //修改密码
 
   static final String getUserInfo = schoolApiBaseUrl +'userInfo'; //获取教务系统用户信息
-  static final String getUserDetail = apifmBaseUrl + domain +'/user/detail'; //获取用户详情
-  // static final String othersDetail =apifmBaseUrl + domain + '/user/friend/detail';
-  static final String updateUserDetail = apifmBaseUrl + domain +'/user/modify'; //修改用户详情
+  static final String getMyDetail = apifmBaseUrl + domain +'/user/detail'; //获取我的详情
+  static final String getUserDetail =apifmAdminBaseUrl  + '/user/apiExtUser/info';//获取用户详情
+  static final String updateMyDetail = apifmBaseUrl + domain +'/user/modify'; //修改用户详情
 
   static final String sign = apifmBaseUrl + domain + '/score/sign'; //签到
   static final String getSignList = apifmBaseUrl + domain + '/score/sign/logs'; //获取所有签到记录

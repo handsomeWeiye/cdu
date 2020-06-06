@@ -1,11 +1,13 @@
 import 'package:cdu_helper/apis/api.dart';
+import 'package:cdu_helper/beans/article_list.dart';
 import 'package:cdu_helper/constants/constants.dart';
-import 'package:cdu_helper/pages/login/impresve_information_page.dart';
+import 'package:cdu_helper/providers/forum_provider.dart';
 import 'package:cdu_helper/utils/data_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'like_bar.dart';
+import 'package:provider/provider.dart';
+import 'forum_index/like_bar.dart';
 
 class ForumPage extends StatefulWidget {
   @override
@@ -16,6 +18,8 @@ class _ForumPageState extends State<ForumPage>
     with SingleTickerProviderStateMixin {
 
   TabController _tabController;
+  PageController _pageController = PageController(initialPage: 0);
+  int currentIndex = 0;
   @override
   void initState() {
     super.initState();
@@ -31,7 +35,10 @@ class _ForumPageState extends State<ForumPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       floatingActionButton: FloatingActionButton(onPressed: null,child: Icon(Icons.add),),
+      backgroundColor: Colors.grey[100],
+       floatingActionButton: FloatingActionButton(onPressed:(){
+         navigatorState.pushNamed('/addArticle');
+       },child: Icon(Icons.add),),
         body: NestedScrollView(
       headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
         return <Widget>[
@@ -42,16 +49,17 @@ class _ForumPageState extends State<ForumPage>
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.pin,
               background: Container(
+                padding: EdgeInsets.only(top: ScreenUtil().setHeight(50)),
                 //头部整个背景颜色
                 height: double.infinity,
-                color: Colors.yellowAccent,
+                color: Colors.blue,
                 child: Column(
                   children: <Widget>[
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          '论坛',
+                          '成大论坛',
                           style: TextStyle(fontSize: 35),
                         ),
                         Icon(Icons.search)
@@ -62,6 +70,12 @@ class _ForumPageState extends State<ForumPage>
               ),
             ),
             bottom: TabBar(
+                onTap: (val){
+                  setState(() {
+                    currentIndex = val;
+                    _tabController.animateTo(currentIndex);
+                  });
+                },
                 controller: _tabController,
                 isScrollable: true,
                 indicatorSize: TabBarIndicatorSize.label,
@@ -81,8 +95,26 @@ class _ForumPageState extends State<ForumPage>
           )
         ];
       },
-      body: FutureBuilder(
-        future: CmsApi.getArticleList(),
+      body: PageView(
+            onPageChanged: (val) {
+                    setState(() {
+                      currentIndex = val;
+                      _pageController.animateToPage(val,duration: Duration(milliseconds: 500), curve: Curves.fastOutSlowIn);
+                      _tabController.animateTo(val);
+                    });
+                  },
+        controller: _pageController,
+        children: <Widget>[
+          articleListWideget('newer'),
+          articleListWideget('viewUp'),
+        ],
+      )
+    ));
+  }
+
+  Widget articleListWideget(String orderBy){
+    return FutureBuilder(
+        future: CmsApi.getArticleList(orderBy: orderBy),
         builder:
             (BuildContext context, AsyncSnapshot<Response<String>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -96,14 +128,17 @@ class _ForumPageState extends State<ForumPage>
           }
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData) {
-              var data = DataUtils.jsonToData(snapshot.data);
-              if (data['code'] == 0) {
+              Map<String,dynamic> data = DataUtils.jsonToData(snapshot.data);
+              ArticleList articleList =  ArticleList.fromJson(data);
+              print(articleList.code);
+              print(articleList.data.length);
+              if (articleList.code == 0) {
                 return ListView.builder(
-                  itemCount: data['data'].length,
+                  itemCount: articleList.data.length,
                   itemBuilder: (BuildContext context, int index) {
+                    print(articleList.data[index].userId.toString());
                     return FutureBuilder(
-                      future:
-                          UserApi.getUserDetail(token: SpUtils.getTokenSync()),
+                      future: UserApi.getUserDetail(id: articleList.data[index].userId.toString(),xtoken: SpUtils.getTokenSync()),
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
@@ -116,20 +151,20 @@ class _ForumPageState extends State<ForumPage>
                           );
                         }
                         if (snapshot.connectionState == ConnectionState.done) {
-                          var userDetail = DataUtils.jsonToData(snapshot.data);
+                          // var userDetail = DataUtils.jsonToData(snapshot.data);
                           return Container(
                             height: ScreenUtil().setHeight(450),
                             width: ScreenUtil.screenWidth,
                             padding: EdgeInsets.all(5),
                             child: InkWell(
                               onTap: (){
-                                print(data['data'][index]['id']);
-                                navigatorState.pushNamed('/detail',arguments: {'id':data['data'][index]['id']});
+                                print(articleList.data[index].id);
+                                Provider.of<ForumDetailsProvider>(context,listen: false).init(articleList.data[index].id);
+                                navigatorState.pushNamed('/detail',arguments: {'id':articleList.data[index].id});
                                 // Navigator.pushNamed(context, '/detail', arguments: {'id': 123});
                               },
                               child:  Card(
-                              color: Colors.yellow,
-                              elevation: 10.0,
+                              color: Colors.white,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               child: Container(
@@ -144,21 +179,21 @@ class _ForumPageState extends State<ForumPage>
                                       children: <Widget>[
                                         Row(
                                           children: <Widget>[
-                                            CircleAvatar(
-                                              radius: 20,
-                                              backgroundImage: NetworkImage(
-                                                  userDetail['data']['base']
-                                                      ['avatarUrl']),
-                                            ),
-                                            Text(userDetail['data']['base']
-                                                ['city'])
+                                            // CircleAvatar(
+                                            //   radius: 20,
+                                            //   backgroundImage: NetworkImage(
+                                            //       userDetail['data']['base']
+                                            //           ['avatarUrl']),
+                                            // ),
+                                            // Text(userDetail['data']['base']
+                                            //     ['city'])
                                           ],
                                         )
                                       ],
                                     ),
-                                    Text(data['data'][index]['title'],style: TextStyle(fontSize: ScreenUtil().setSp(32),fontWeight: FontWeight.bold),overflow: TextOverflow.clip,maxLines: 2,),
-                                    Text(data['data'][index]['descript'],style: TextStyle(color:Colors.grey),overflow: TextOverflow.clip,maxLines: 3,),
-                                    likeBar(likeCount: data['data'][index]['usefulNumber'],commentCount: data['data'][index]['commentNumber'],favoriteCount: data['data'][index]['numberFav'],id: data['data'][index]['id'])
+                                    Text(articleList.data[index].title,style: TextStyle(fontSize: ScreenUtil().setSp(32),fontWeight: FontWeight.bold),overflow: TextOverflow.clip,maxLines: 2,),
+                                    Text(articleList.data[index].descript,style: TextStyle(color:Colors.grey),overflow: TextOverflow.clip,maxLines: 3,),
+                                    likeBar(likeCount: articleList.data[index].usefulNumber,commentCount: articleList.data[index].commentNumber,favoriteCount: articleList.data[index].numberFav,id: articleList.data[index].id)
                                   ],
                                 ),
                               ),
@@ -186,7 +221,6 @@ class _ForumPageState extends State<ForumPage>
             }
           }
         },
-      ),
-    ));
+      );
   }
 }

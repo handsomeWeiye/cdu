@@ -37,18 +37,19 @@ class CmsApi {
     return data;
   }
 
-  static Future<Response<String>> addArticle(
+  static Future<Response<String>> addArticle( {
     String categoryId,
     String title,
     String descript,
     String content,
-    String token, {
+    String token,
     String author,
     String id,
     String pic,
     String keywords,
+    String extroInfo,
   }) async {
-    NetUtils.postX(API.addArticle, data: {
+   Response<String>data = await NetUtils.postX(API.addArticle, data: {
       'content': content,
       'author': author,
       'token': token,
@@ -57,11 +58,13 @@ class CmsApi {
       'descript': descript,
       'id': id,
       'pic': pic,
-      'keywords': keywords
+      'keywords': keywords,
+      'postJsonString':extroInfo,
     });
+    return data;
   }
 
-  static Future<Response<String>> getArticle(String id, {String token}) async {
+  static Future<Response<String>> getArticle( {String id,String token}) async {
     Response<String> data =
         await NetUtils.getX(API.getArticle, data: {'id': id, 'token': token});
     return data;
@@ -95,9 +98,13 @@ class CmsApi {
           data: {'id': id, 'newsId': newsId, 'token': token});
 
   static Future<Response<String>> addArticleUseful(
-          {String id, String token}) async =>
-      NetUtils.postX(API.addArticleUserful,
+          {String id, String token}) async{
+     Response<String> data =  await NetUtils.postX(API.addArticleUserful,
           data: {'id': id, 'token': token, 'isUseful': 'true'});
+          print(data);
+          return data;
+          
+          }
   static Future<Response<String>> getUsefulList(String id,
           {String page, String pageSize, String token}) async =>
       NetUtils.getX(API.getUserfulList, data: {
@@ -108,12 +115,13 @@ class CmsApi {
       });
 
   static Future<Response<String>> addComment(
-          {String content, String pid, String refld, String token}) async =>
+          {String content, String pid, String refld, String token,String extJsonStr}) async =>
       NetUtils.postX(API.addComment, data: {
         'content': content,
         'pid': pid,
         'refld': refld,
         'token': token,
+        'extJsonStr':extJsonStr,
         'type': '3'
       });
   static Future<Response<String>> getCommentList(

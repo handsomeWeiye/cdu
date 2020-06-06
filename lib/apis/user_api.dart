@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cdu_helper/constants/constants.dart';
+import 'package:cdu_helper/utils/data_utils.dart';
 import 'package:dio/dio.dart';
 import 'package:cdu_helper/utils/utils.dart';
 import 'api.dart';
@@ -15,6 +16,16 @@ class UserApi {
       NetUtils.postX(API.resetPwd,
           data: {'mobile': mobile, 'code': code, 'pwd': pwd, 'token': token});
 
+  static Future<String> loginAdmin({String merchantKey,String merchantNo })async{
+    Response<String> jsonData =  await NetUtils.postX(API.loginAdmin,data:{'merchantKey':Constants.merchantKey,'merchantNo':Constants.merchantNo});
+    String data = DataUtils.jsonToData(jsonData)['data'];
+    return data;
+  }
+
+  static Future<String> verArticle()async{
+
+  }
+
   static Future<Response<String>> login(
            String mobile, String pwd,
           {String deviceId, String deviceName,String token}) async =>
@@ -26,12 +37,7 @@ class UserApi {
         'token': token
       });
 
-  static Future<Response<String>> loginAdmin(
-          ) async =>
-      NetUtils.postX(API.loginAdmin, data: {
-        'merchantKey': Constants.merchantKey,
-        'merchantNo': Constants.merchantNo,
-      });
+
 
   static Future<Response<String>> loginOut({String token}) async =>
       NetUtils.getX(API.loginOut, data: {'token': token});
@@ -43,13 +49,16 @@ class UserApi {
       NetUtils.post(API.getUserInfo,
           data: {'account': account, 'password': password});
 
-  static Future<Response<String>> getUserDetail({String token}) async 
-      { Response<String> data = await NetUtils.getX(API.getUserDetail, data: {'token': token});return data;}
+  static Future<Response<String>> getMyDetail({String token}) async 
+      { Response<String> data = await NetUtils.getX(API.getMyDetail, data: {'token': token});return data;}
+
+  static Future<Response<String>> getUserDetail({String xtoken,String id}) async 
+      { Response<String> data = await NetUtils.getX(API.getUserDetail, data: {'token': xtoken,'id':id});return data;}
 
   static Future<Response<String>> updateUserDetail(
          { String avatarUrl, String city, String nick, String province,
           String token, String extJsonStr}) async =>
-      NetUtils.postX(API.updateUserDetail, data: {
+      NetUtils.postX(API.updateMyDetail, data: {
         'avatarUrl': avatarUrl,
         'city': city,
         'nick': nick,

@@ -1,4 +1,5 @@
 import 'package:cdu_helper/constants/configs.dart';
+import 'package:cdu_helper/pages/forum/forum_detail_page.dart';
 import 'package:cdu_helper/pages/splash/splash_page.dart';
 import 'package:cdu_helper/providers/providers.dart';
 import 'package:flutter/material.dart';
@@ -86,13 +87,11 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-   
+    // ScreenUtil.init(context,width: 750,height: 1500);
      return
     MultiProvider(
       providers: providers,
-      child: 
-    
-     OKToast(child:  MaterialApp(
+      child:  OKToast(child:  MaterialApp(
         navigatorKey: Instances.navigatorKey,
         title: Configs.appTitle,
         theme: isDark ? Themes.dark():Themes.light(),

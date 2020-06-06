@@ -1,4 +1,7 @@
 
+import 'dart:convert';
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -6,6 +9,8 @@ class SpUtils {
   static final String spIsLogin = "isLogin";
   static final String spIsBind = "isBind";
   static final String spAccount = "account";
+  static final String spNickName = "nickname";
+  static final String spUserUrl = "userUrl";
   static final String spPassword = "password";
   static final String spToken = "token";
   static final String spUid = "uid";
@@ -13,6 +18,8 @@ class SpUtils {
   static final String spColorThemeIndex = "themeColorThemeIndex";
 
   static SharedPreferences sp;
+
+
   static Future initSharedPreferences() async {
     sp = await SharedPreferences.getInstance();
   }
@@ -25,6 +32,31 @@ class SpUtils {
   static Future<bool> isBind() async {
     bool b = sp.getBool(spIsBind);
     return b != null && b;
+  }
+
+  static String getUserNickName()  {
+    String nickName = sp.getString(spNickName);
+    return nickName;
+  }
+  static  void addUserNickName(String nickName) async {
+    sp.setString(spNickName, nickName);
+  }  
+
+  static String getUserUrl()  {
+    String userUrl = sp.getString(spUserUrl);
+    return userUrl;
+  }
+  static void addUserUrl(String userUrl) async {
+     sp.setString(spUserUrl,userUrl);
+  }
+  static String getExtroInfo(){
+    Map<String,String> extroInfoMap = {
+      "userNickName":getUserNickName(),
+      "userPic":getUserUrl(),
+    };
+    String extroInfo = jsonEncode(extroInfoMap).toString();
+    debugPrint(extroInfo);
+    return extroInfo;
   }
 
 

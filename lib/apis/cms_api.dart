@@ -63,7 +63,34 @@ class CmsApi {
     });
     return data;
   }
-
+  static Future<Response<String>> addAdminArticle( {
+    String categoryId,
+    String title,
+    String descript,
+    String content,
+    String token,
+    String author,
+    String id,
+    String pic,
+    String keywords,
+    String extroInfo,
+    String xToken,
+  }) async {
+   Response<String>data = await NetUtils.postWithHeaderSet(API.addAdminArticle, data: {
+      'content': content,
+      'author': SpUtils.getUserNickName(),
+      // 'token': SpUtils.getTokenSync(),
+      'categoryId': '9890',
+      'title': title,
+      'descript': content,
+      'id': id,
+      'pic': pic,
+      'keywords': title,
+      'status':'2',
+      'extJsonStr':SpUtils.getExtroInfo(),
+    },headers: {'X-Token':xToken});
+    return data;
+  }
   static Future<Response<String>> getArticle( {String id,String token}) async {
     Response<String> data =
         await NetUtils.getX(API.getArticle, data: {'id': id, 'token': token});
@@ -115,11 +142,11 @@ class CmsApi {
       });
 
   static Future<Response<String>> addComment(
-          {String content, String pid, String refld, String token,String extJsonStr}) async =>
+          {String content, String pid, String refId, String token,String extJsonStr}) async =>
       NetUtils.postX(API.addComment, data: {
         'content': content,
         'pid': pid,
-        'refld': refld,
+        'refId': refId,
         'token': token,
         'extJsonStr':extJsonStr,
         'type': '3'
@@ -128,15 +155,14 @@ class CmsApi {
       {String page,
       String pageSize,
       String pid,
-      String refld,
+      String refId,
       String token}) async {
     Response<String> data = await NetUtils.postX(API.getCommentList, data: {
       'page': page,
       'PageSize': pageSize,
       'token': token,
-      'refld': refld,
+      'refId': refId,
       'pid': pid,
-      'type': '3'
     });
     return data;
   }

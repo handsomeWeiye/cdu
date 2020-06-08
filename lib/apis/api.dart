@@ -75,6 +75,7 @@ class API {
 
   static final String getArticleList  = apifmBaseUrl + domain + '/cms/news/list'; //获取文章列表
   static final String addArticle  = apifmBaseUrl + domain + '/cms/news/put'; //添加修改文章
+  static final String addAdminArticle  = apifmAdminBaseUrl  + 'user/apiExtNews/save'; //后台添加修改文章
   static final String getArticle  = apifmBaseUrl + domain + '/cms/news/detail'; //获取文章
   static final String getPreNextArticle  = apifmBaseUrl + domain + '/cms/news/preNext'; //获取上一篇下一篇文章
   static final String deleteArticle  = apifmBaseUrl + domain + '/cms/news/del'; //删除文章

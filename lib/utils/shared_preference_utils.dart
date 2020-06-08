@@ -51,8 +51,8 @@ class SpUtils {
   }
   static String getExtroInfo(){
     Map<String,String> extroInfoMap = {
-      "userNickName":getUserNickName(),
-      "userPic":getUserUrl(),
+      "authorName":getUserNickName(),
+      "authorPic":getUserUrl(),
     };
     String extroInfo = jsonEncode(extroInfoMap).toString();
     debugPrint(extroInfo);

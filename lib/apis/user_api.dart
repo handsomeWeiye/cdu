@@ -23,7 +23,10 @@ class UserApi {
   }
 
   static Future<String> verArticle()async{
-
+    UserApi.loginAdmin().then((val){
+       String xtoken = val;
+       
+    });
   }
 
   static Future<Response<String>> login(

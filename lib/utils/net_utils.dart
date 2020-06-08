@@ -52,8 +52,11 @@ class NetUtils{
   static Future<Response<T>> post<T>(String url,{Map<String,dynamic>data}) async=>
   await dio.post(url,data: data);
 
-    static Future<Response<T>> postX<T>(String url,{Map<String,dynamic>data}) async=>
-  await dio.post(url,data: data,options: Options(contentType: Headers.formUrlEncodedContentType));
+    static Future<Response<T>> postX<T>(String url,{Map<String,dynamic>data,}) async=>
+  await dio.post(url,data: data,options: Options(contentType: Headers.formUrlEncodedContentType,));
+
+      static Future<Response<T>> postWithHeaderSet<T>(String url,{Map<String,dynamic>data,Map<String,dynamic>headers}) async=>
+  await dio.post(url,data: data,options: Options(contentType: Headers.formUrlEncodedContentType,headers: headers));
 
   static Future<Response<T>> uploadFiles<T>(String url,FormData formData) async =>
     await dio.post(url,data:formData);
